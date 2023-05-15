@@ -31,8 +31,9 @@ form div {
   padding: .5rem;
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
+  gap: 10px;
 }
 
 form label {
@@ -51,6 +52,7 @@ form input {
 .button {
   display: block;
   width: 200px;
+  max-width: 100%;
   margin: 1.25rem auto;
   padding: .5rem;
   text-align: center;
@@ -61,11 +63,11 @@ form input {
   cursor: pointer;
 }
 
-.button.cta-btn {
+.button.primary-btn {
   background-color: #008d18;
 }
 
-.button.go-back-btn {
+.button.secondary-btn {
   background-color: #4c6faf;
 }
 
