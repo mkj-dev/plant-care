@@ -6,8 +6,9 @@ body {
 
 .container {
   max-width: 960px;
-  margin: 0 auto;
-  padding: 1.25rem;
+  min-height: 100vh;
+  margin: 1rem auto;
+  padding: 1.5rem;
 }
 
 h1 {
@@ -27,8 +28,23 @@ form {
 }
 
 form div {
-  text-align: center;
   padding: .5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+form label {
+  width: 80px;
+  max-width: 100%;
+  text-align: right;
+}
+
+form input {
+  width: 180px;
+  max-width: 100%;
+  padding: .25rem .5rem;
 }
 
 /* BUTTONS */
@@ -66,4 +82,10 @@ form div {
 .success {
   color: #008d18;
   text-align: center;
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 1.5rem;
 }
