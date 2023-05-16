@@ -1,2 +1,5 @@
 # Database connection
-/connection.php
+/database/connection.php
+
+# .vscode settings
+/.vscode
