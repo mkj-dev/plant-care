@@ -1,6 +1,7 @@
 <?php
+require_once './database/connection.php';
+require_once './database/UserRepository.php';
 require_once './php_components/header.php';
-require_once 'connection.php';
 session_start();
 
 // Check if user is logged in, redirect to login.php if not
@@ -12,10 +13,10 @@ if (!isset($_SESSION['user_id'])) {
 $userId = $_SESSION['user_id'];
 
 try {
-  $getUser = $db_conn->prepare('SELECT * FROM users WHERE id = :id');
-  $getUser->execute(['id' => $userId]);
-  $user = $getUser->fetch();
+  $userRepository = new UserRepository($db_conn);
+  $user = $userRepository->getUserById($userId);
 } catch (Exception $e) {
+  // TODO log the exception to a file
   echo "<h3 class='error'>An error occurred while retrieving user information. Please try again later.</h3>";
   exit();
 }

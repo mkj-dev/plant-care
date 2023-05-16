@@ -1,30 +1,28 @@
 <?php
+require_once './database/connection.php';
+require_once './database/UserRepository.php';
 require_once './php_components/header.php';
-require_once 'connection.php';
 session_start();
+
+$errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (!empty($_POST['email']) && !empty($_POST['password'])) {
     $email = htmlspecialchars(trim($_POST['email']));
     $password = htmlspecialchars(trim($_POST['password']));
 
-    $getUser = $db_conn->prepare('SELECT * FROM users WHERE email = :email');
-    $getUser->execute(['email' => $email]);
-    $user = $getUser->fetch();
+    $userRepository = new UserRepository($db_conn);
+    $user = $userRepository->getUserByEmail($email);
     
-    if ($user) {
-      if (password_verify($password, $user['password'])) {
-        $_SESSION['user_id'] = $user['id'];
-        header('Location: dashboard.php');
-        exit();
-      } else {
-        echo "<p class='error'>Incorrect password.";
-      }
+    if ($user && password_verify($password, $user['password'])) {
+      $_SESSION['user_id'] = $user['id'];
+      header('Location: dashboard.php');
+      exit();
     } else {
-      echo "<p class='error'>User not found.</p>";
+      $errors[] = "Incorrect email or password!";
     }
   } else {
-    echo "<p class='error'>All fields are required!</p>";
+      $errors[] = "All fields are required!";
   }
 }
 ?>
@@ -44,5 +42,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <form action="/index.php">
     <button type="submit" class="button secondary-btn">Go back</button>
   </form>
+<?php
+if (!empty($errors)) {
+  foreach ($errors as $error) {
+    echo "<h3 class='error'>Error: $error</h3>";
+  }
+}
+?>
 </div>
+
 <?php require_once './php_components/footer.php'; ?>
