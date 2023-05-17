@@ -15,6 +15,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $errors[] = "Invalid email format.";
     }
 
+    // Form validation
+    if (strlen($username) < 3 || strlen($username) > 50) {
+      $errors[] = "Username length must be between 3 and 50 characters long.";
+    }
+    
+    if (strlen($password) < 8 || strlen($password) > 255) {
+      $errors[] = "Password length must be between 8 and 255 characters long.";
+    } 
+    
+    if (strlen($email) < 6 || strlen($email) > 100) {
+      $errors[] = "Email length must be between 6 and 100 characters long.";
+    }
+
     try {
       $userRepository = new UserRepository($db_conn);
 
@@ -33,25 +46,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       // TODO log the exception to a file
       $errors[] = "An error occurred while creating the account.";
     }
+
+    if (empty($errors)) {
+      $userRepository->createUser($username, $password, $email);
+      echo "<h3 class='success'>Your account has been created!</h3>";
+    }
+  } else {
+    $errors[] = "All fields are required!";
   }
-} else {
-  $errors[] = "All fields are required!";
-}
+} 
 ?>
 
 <div class="container">
   <form method="post" action="<?= $_SERVER['PHP_SELF']; ?>">
     <div>
       <label for="username">Username</label>
-      <input type="text" name="username" id="username" required>
+      <input type="text" name="username" id="username" minlength="3" maxlength="50" required>
     </div>
     <div>
       <label for="password">Password</label>
-      <input type="password" name="password" id="password" required>
+      <input type="password" name="password" id="password" minlength="8" maxlength="255" required>
     </div>
     <div>
       <label for="email">Email</label>
-      <input type="email" name="email" id="email" required>
+      <input type="email" name="email" id="email" minlength="6" maxlength="100" required>
     </div>
     <button type="submit" class="button primary-btn">Register</button>
   </form>
@@ -64,9 +82,6 @@ if (!empty($errors)) {
   foreach ($errors as $error) {
     echo "<h3 class='error'>Error: $error</h3>";
   }
-} else {
-  $userRepository->createUser($username, $password, $email);
-  echo "<h3 class='success'>Your account has been created!</h3>";
 }
 ?>
 </div>
