@@ -11,7 +11,7 @@ body {
   padding: 1.5rem;
 }
 
-h1 {
+h1, h3 {
   text-align: center;
 }
 
@@ -23,7 +23,7 @@ p {
 form {
   width: 400px;
   max-width: 100%;
-  padding: 1.25rem auto;
+  padding: .25rem .75rem;
   margin: 1rem auto;
 }
 
@@ -42,10 +42,46 @@ form label {
   text-align: right;
 }
 
-form input {
+form input,
+form textarea {
   width: 180px;
   max-width: 100%;
   padding: .25rem .5rem;
+}
+
+/* DASHBOARD */
+.flex-container {
+  max-width: fit-content;
+  display: flex;
+  align-items: center;
+}
+
+.flex-container h2,
+.flex-container form {
+  margin: 0 .25rem;
+  width: fit-content;
+}
+
+/* PLANT CONTAINER */
+.plant-container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+/* PLANT CARD */
+.plant-card {
+  width: 300px;
+  max-width: 100%;
+  text-align: center;
+}
+
+.plant-card img {
+  width: 200px;
+  max-width: 100%;
+  height: auto;
 }
 
 /* BUTTONS */
@@ -73,6 +109,7 @@ form input {
 
 .button.logout-btn {
   background-color: #eb0800;
+  width: fit-content;
 }
 
 /* ERROR */
