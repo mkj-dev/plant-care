@@ -25,7 +25,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $errors[] = "All fields are required!";
   }
 }
+
+if (!empty($errors)) {
+  foreach ($errors as $error) {
+    echo "<h3 class='error'>Error: $error</h3>";
+  }
+}
 ?>
+
 <div class="container">
   <form method="post">
     <div>
@@ -42,13 +49,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <form action="/index.php">
     <button type="submit" class="button secondary-btn">Go back</button>
   </form>
-<?php
-if (!empty($errors)) {
-  foreach ($errors as $error) {
-    echo "<h3 class='error'>Error: $error</h3>";
-  }
-}
-?>
 </div>
 
 <?php require_once './php_components/footer.php'; ?>
